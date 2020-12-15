@@ -1,5 +1,7 @@
 import { SignUpController } from './SignUp'
 import { EmailValidator } from '../protocols'
+import { CreateAccount } from '../../domain/usecases/createAccount'
+import { AccountEntity } from '../../domain/entities/Account'
 import {
   MissingParameterError,
   InvalidParameterError,
@@ -9,6 +11,7 @@ import {
 interface MakeSystemUnderTestReturns {
   systemUnderTest: SignUpController
   emailValidatorStub: EmailValidator
+  createAccountStub: CreateAccount
 }
 
 function makeEmailValidator(): EmailValidator {
@@ -21,10 +24,30 @@ function makeEmailValidator(): EmailValidator {
   return new EmailValidatorStub()
 }
 
+function makeCreateAccount(): CreateAccount {
+  class CreateAccountStub implements CreateAccount {
+    create(): AccountEntity {
+      const fakeAccount = {
+        id: 'valid_id',
+        name: 'valid_name',
+        email: 'valid_email',
+        password: 'valid_password'
+      }
+      return fakeAccount
+    }
+  }
+
+  return new CreateAccountStub()
+}
+
 function makeSystemUnderTest(): MakeSystemUnderTestReturns {
   const emailValidatorStub = makeEmailValidator()
-  const systemUnderTest = new SignUpController(emailValidatorStub)
-  return { systemUnderTest, emailValidatorStub }
+  const createAccountStub = makeCreateAccount()
+  const systemUnderTest = new SignUpController(
+    emailValidatorStub,
+    createAccountStub
+  )
+  return { systemUnderTest, emailValidatorStub, createAccountStub }
 }
 
 describe('SignUpController', () => {
@@ -164,5 +187,27 @@ describe('SignUpController', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test('Deve chamar o createAccount com os dados corretos', () => {
+    const { systemUnderTest, createAccountStub } = makeSystemUnderTest()
+    const createSpy = jest.spyOn(createAccountStub, 'create')
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_mail@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+
+    systemUnderTest.handle(httpRequest)
+
+    expect(createSpy).toHaveBeenCalledWith({
+      name: 'any_name',
+      email: 'any_mail@mail.com',
+      password: 'any_password'
+    })
   })
 })
