@@ -90,6 +90,25 @@ describe('SignUpController', () => {
     )
   })
 
+  test('Deve retornar 400 se o password for diferente do passwordConfirmation', () => {
+    const { systemUnderTest } = makeSystemUnderTest()
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_mail@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'invalid_password'
+      }
+    }
+
+    const httpResponse = systemUnderTest.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(
+      new InvalidParameterError('passwordConfirmation')
+    )
+  })
+
   test('Deve retornar 400 se o email enviado for inválido', () => {
     const { systemUnderTest, emailValidatorStub } = makeSystemUnderTest()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
