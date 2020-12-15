@@ -11,14 +11,28 @@ interface MakeSystemUnderTestReturns {
   emailValidatorStub: EmailValidator
 }
 
-function makeSystemUnderTest(): MakeSystemUnderTestReturns {
+function makeEmailValidator(): EmailValidator {
   class EmailValidatorStub implements EmailValidator {
     isValid(): boolean {
       return true
     }
   }
 
-  const emailValidatorStub = new EmailValidatorStub()
+  return new EmailValidatorStub()
+}
+
+function makeEmailValidatorWithError(): EmailValidator {
+  class EmailValidatorStub implements EmailValidator {
+    isValid(): boolean {
+      throw new ServerError()
+    }
+  }
+
+  return new EmailValidatorStub()
+}
+
+function makeSystemUnderTest(): MakeSystemUnderTestReturns {
+  const emailValidatorStub = makeEmailValidator()
   const systemUnderTest = new SignUpController(emailValidatorStub)
   return { systemUnderTest, emailValidatorStub }
 }
@@ -123,13 +137,7 @@ describe('SignUpController', () => {
   })
 
   test('Deve retornar 500 se o emailValidator throws error', () => {
-    class EmailValidatorStub implements EmailValidator {
-      isValid(): boolean {
-        throw new ServerError()
-      }
-    }
-
-    const emailValidatorStub = new EmailValidatorStub()
+    const emailValidatorStub = makeEmailValidatorWithError()
     const systemUnderTest = new SignUpController(emailValidatorStub)
 
     const httpRequest = {
