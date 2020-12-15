@@ -6,9 +6,13 @@ import {
   Controller,
   EmailValidator
 } from '../protocols'
+import { CreateAccount } from '../../domain/usecases/createAccount'
 
 export class SignUpController implements Controller {
-  constructor(private emailValidator: EmailValidator) {}
+  constructor(
+    private emailValidator: EmailValidator,
+    private createAccount: CreateAccount
+  ) {}
 
   handle(httpRequest: HttpRequest): HttpResponse {
     try {
@@ -24,7 +28,7 @@ export class SignUpController implements Controller {
         }
       }
 
-      const { email, password, passwordConfirmation } = httpRequest.body
+      const { name, email, password, passwordConfirmation } = httpRequest.body
 
       const emailIsValid = this.emailValidator.isValid(email)
       if (!emailIsValid) {
@@ -34,6 +38,12 @@ export class SignUpController implements Controller {
       if (password !== passwordConfirmation) {
         return badRequest(new InvalidParameterError('passwordConfirmation'))
       }
+
+      this.createAccount.create({
+        name,
+        email,
+        password
+      })
 
       return { statusCode: 200, body: '' }
     } catch (error) {
