@@ -14,3 +14,10 @@ export function serverError(): HttpResponse {
     body: new ServerError()
   }
 }
+
+export function creationRequestSuccess(body: any): HttpResponse {
+  return {
+    statusCode: 201,
+    body
+  }
+}
