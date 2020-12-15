@@ -1,12 +1,14 @@
 import { SignUpController } from './SignUp'
-import { EmailValidator } from '../protocols'
-import { CreateAccount } from '../../domain/usecases/createAccount'
-import { AccountEntity } from '../../domain/entities/Account'
+import {
+  EmailValidator,
+  CreateAccount,
+  AccountEntity
+} from './signup.protocols'
 import {
   MissingParameterError,
   InvalidParameterError,
   ServerError
-} from '../errors'
+} from '../../errors'
 
 interface MakeSystemUnderTestReturns {
   systemUnderTest: SignUpController
