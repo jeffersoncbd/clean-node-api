@@ -1,9 +1,13 @@
 import { SignUpController } from './SignUp'
 import { MissingParameterError } from '../errors/MissingParameterError'
 
+function makeSystemUnderTest(): SignUpController {
+  return new SignUpController()
+}
+
 describe('SignUpController', () => {
   test('Deve retornar 400 se o nome não for enviado', () => {
-    const systemUnderTest = new SignUpController()
+    const systemUnderTest = makeSystemUnderTest()
     const httpRequest = {
       body: {
         email: 'any_email@mail.com',
@@ -18,7 +22,7 @@ describe('SignUpController', () => {
   })
 
   test('Deve retornar 400 se o email não for enviado', () => {
-    const systemUnderTest = new SignUpController()
+    const systemUnderTest = makeSystemUnderTest()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -33,7 +37,7 @@ describe('SignUpController', () => {
   })
 
   test('Deve retornar 400 se o password não for enviado', () => {
-    const systemUnderTest = new SignUpController()
+    const systemUnderTest = makeSystemUnderTest()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -48,7 +52,7 @@ describe('SignUpController', () => {
   })
 
   test('Deve retornar 400 se o passwordConfirmation não for enviado', () => {
-    const systemUnderTest = new SignUpController()
+    const systemUnderTest = makeSystemUnderTest()
     const httpRequest = {
       body: {
         name: 'any_name',
