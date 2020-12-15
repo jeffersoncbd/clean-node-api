@@ -1,8 +1,10 @@
 import { SignUpController } from './SignUp'
-import { MissingParameterError } from '../errors/MissingParameterError'
-import { InvalidParameterError } from '../errors/InvalidParameterError'
 import { EmailValidator } from '../protocols/emailValidator'
-import { ServerError } from '../errors/ServerError'
+import {
+  MissingParameterError,
+  InvalidParameterError,
+  ServerError
+} from '../errors'
 
 interface MakeSystemUnderTestReturns {
   systemUnderTest: SignUpController
