@@ -2,6 +2,7 @@ import { SignUpController } from './SignUp'
 import { MissingParameterError } from '../errors/MissingParameterError'
 import { InvalidParameterError } from '../errors/InvalidParameterError'
 import { EmailValidator } from '../protocols/emailValidator'
+import { ServerError } from '../errors/ServerError'
 
 interface MakeSystemUnderTestReturns {
   systemUnderTest: SignUpController
@@ -117,5 +118,30 @@ describe('SignUpController', () => {
     systemUnderTest.handle(httpRequest)
 
     expect(isValidSpy).toHaveBeenCalledWith('any_mail@mail.com')
+  })
+
+  test('Deve retornar 500 se o emailValidator throws error', () => {
+    class EmailValidatorStub implements EmailValidator {
+      isValid(): boolean {
+        throw new ServerError()
+      }
+    }
+
+    const emailValidatorStub = new EmailValidatorStub()
+    const systemUnderTest = new SignUpController(emailValidatorStub)
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_mail@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+
+    const httpResponse = systemUnderTest.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
