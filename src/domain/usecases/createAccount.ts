@@ -7,5 +7,5 @@ export interface CreateAccountTDO {
 }
 
 export interface CreateAccount {
-  create: (account: CreateAccountTDO) => AccountEntity
+  create: (account: CreateAccountTDO) => Promise<AccountEntity>
 }
