@@ -28,4 +28,13 @@ describe('EmailValidatorAdapter', () => {
 
     expect(isValid).toBe(true)
   })
+
+  test('Deve chamar o validator com o email correto', () => {
+    const systemUnderTest = makeSystemUnderTest()
+    const isEmailSpy = jest.spyOn(validator, 'isEmail')
+
+    systemUnderTest.isValid('any_email@mail.com')
+
+    expect(isEmailSpy).toHaveBeenCalledWith('any_email@mail.com')
+  })
 })
