@@ -7,7 +7,9 @@ export default {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/**/*.protocols.ts',
-    '!**/protocols/**'
+    '!**/protocols/**',
+    '!**/usecases/**',
+    '!**/entities/**'
   ],
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
