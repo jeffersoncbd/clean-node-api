@@ -13,7 +13,8 @@ export default {
   coverageProvider: 'v8',
 
   testEnvironment: 'node',
-  testMatch: ['<rootDir>/src/**/*.spec.ts'],
+
+  testMatch: ['<rootDir>/src/**/*.test.ts', '<rootDir>/src/**/*.spec.ts'],
 
   preset: 'ts-jest'
 }

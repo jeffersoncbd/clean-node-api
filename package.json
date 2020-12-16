@@ -4,8 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
-    "test:staged": "jest --passWithNoTests"
+    "test": "jest --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --watch --noStackTrace --runInBand",
+    "test:watch": "yarn test --watch",
+    "test:unitary": "yarn test:watch -c jest.unitary.config.ts",
+    "test:integration": "yarn test:watch -c jest.integration.config.ts",
+    "test:staged": "yarn test --passWithNoTests --findRelatedTests",
+    "test:ci": "yarn test --coverage"
   },
   "keywords": [],
   "author": "",

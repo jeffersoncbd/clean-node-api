@@ -51,6 +51,7 @@ export class SignUpController implements Controller {
 
       return creationRequestSuccess({ id: account.id })
     } catch (error) {
+      console.error(error)
       return serverError()
     }
   }
