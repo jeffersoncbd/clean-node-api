@@ -13,7 +13,7 @@ function makeSystemUnderTest() {
 }
 
 describe('EmailValidatorAdapter', () => {
-  test('Deve retornar "false" se emailValidator retornar "false"', () => {
+  test('Deve retornar "false" se validator retornar "false"', () => {
     const systemUnderTest = makeSystemUnderTest()
     jest.spyOn(validator, 'isEmail').mockReturnValueOnce(false)
 
@@ -22,7 +22,7 @@ describe('EmailValidatorAdapter', () => {
     expect(isValid).toBe(false)
   })
 
-  test('Deve retornar "true" se emailValidator retornar "true"', () => {
+  test('Deve retornar "true" se validator retornar "true"', () => {
     const systemUnderTest = makeSystemUnderTest()
     const isValid = systemUnderTest.isValid('valid_email@mail.com')
 
