@@ -2,14 +2,24 @@ import {
   CreateAccount,
   CreateAccountTDO,
   AccountEntity,
-  Encrypter
+  Encrypter,
+  CreateAccountRepository
 } from './CreateAccount.protocols'
 
 export class DatabaseCreateAccountUseCase implements CreateAccount {
-  constructor(private encrypter: Encrypter) {}
+  constructor(
+    private encrypter: Encrypter,
+    private createAccountRepository: CreateAccountRepository
+  ) {}
 
-  async create(account: CreateAccountTDO): Promise<AccountEntity> {
-    const hashedPassword = await this.encrypter.encrypt(account.password)
-    return { id: '', password: hashedPassword, name: '', email: '' }
+  async create(accountData: CreateAccountTDO): Promise<AccountEntity> {
+    const hashedPassword = await this.encrypter.encrypt(accountData.password)
+
+    const account = await this.createAccountRepository.create({
+      ...accountData,
+      password: hashedPassword
+    })
+
+    return account
   }
 }
