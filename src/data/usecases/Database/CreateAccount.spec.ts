@@ -29,4 +29,19 @@ describe('DatabaseCreateAccountUseCase', () => {
 
     expect(encryptSpy).toHaveBeenLastCalledWith('valid_password')
   })
+
+  test('Deve lançar erro se Encrypter lançar algum erro', async () => {
+    const { systemUnderTest, encrypterStub } = makeSystemUnderTest()
+    jest.spyOn(encrypterStub, 'encrypt').mockImplementationOnce(async () => {
+      throw new Error()
+    })
+
+    const promise = systemUnderTest.create({
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password'
+    })
+
+    await expect(promise).rejects.toThrow()
+  })
 })
