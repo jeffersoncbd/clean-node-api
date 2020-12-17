@@ -1,5 +1,7 @@
-import { DatabaseCreateAccountUseCase } from './CreateAccount'
-import { Encrypter } from '../../protocols/encrypter'
+import {
+  DatabaseCreateAccountUseCase,
+  Encrypter
+} from './CreateAccount.protocols'
 
 function makeEncrypterStub() {
   class EncrypterStub implements Encrypter {

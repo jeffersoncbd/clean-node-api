@@ -1,9 +1,9 @@
 import {
   CreateAccount,
-  CreateAccountTDO
-} from '../../../domain/usecases/createAccount'
-import { AccountEntity } from '../../../domain/entities/Account'
-import { Encrypter } from '../../protocols/encrypter'
+  CreateAccountTDO,
+  AccountEntity,
+  Encrypter
+} from './CreateAccount.protocols'
 
 export class DatabaseCreateAccountUseCase implements CreateAccount {
   constructor(private encrypter: Encrypter) {}
