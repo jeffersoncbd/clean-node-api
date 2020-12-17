@@ -17,6 +17,11 @@ describe('AccountMongoDBRepository', () => {
     await mongoConnectionHelper.disconnect()
   })
 
+  beforeEach(async () => {
+    const accountsCollection = mongoConnectionHelper.getCollection('accounts')
+    await accountsCollection.deleteMany({})
+  })
+
   test('Deve retornar a conta criada quando ter sucesso', async () => {
     const { systemUnderTest } = makeSystemUnderTest()
 
