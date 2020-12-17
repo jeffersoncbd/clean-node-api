@@ -87,4 +87,24 @@ describe('DatabaseCreateAccountUseCase', () => {
       password: 'hashed_password'
     })
   })
+
+  test('Deve lançar erro se CreateAccountRepository lançar algum erro', async () => {
+    const {
+      systemUnderTest,
+      createAccountRepositoryStub
+    } = makeSystemUnderTest()
+    jest
+      .spyOn(createAccountRepositoryStub, 'create')
+      .mockImplementationOnce(async () => {
+        throw new Error()
+      })
+
+    const promise = systemUnderTest.create({
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password'
+    })
+
+    await expect(promise).rejects.toThrow()
+  })
 })
