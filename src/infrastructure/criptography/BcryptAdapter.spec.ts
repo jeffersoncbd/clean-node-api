@@ -27,4 +27,15 @@ describe('BcryptAdapter', () => {
 
     expect(hash).toBe('hash_value')
   })
+
+  test('Deve relançar erro se bcrypt.hash lançar erro', async () => {
+    const { systemUnderTest } = makeSystemUnderTest()
+    jest.spyOn(bcrypt, 'hash').mockImplementationOnce(async () => {
+      throw new Error()
+    })
+
+    const promise = systemUnderTest.encrypt('any_value')
+
+    await expect(promise).rejects.toThrow()
+  })
 })
