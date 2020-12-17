@@ -107,4 +107,21 @@ describe('DatabaseCreateAccountUseCase', () => {
 
     await expect(promise).rejects.toThrow()
   })
+
+  test('Deve retornar a conta criada se tudo der certo', async () => {
+    const { systemUnderTest } = makeSystemUnderTest()
+
+    const account = await systemUnderTest.create({
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password'
+    })
+
+    expect(account).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'hashed_password'
+    })
+  })
 })
