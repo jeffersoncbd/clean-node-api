@@ -16,4 +16,15 @@ describe('BcryptAdapter', () => {
 
     expect(hashSpy).toHaveBeenCalledWith('any_value', salt)
   })
+
+  test('Deve retornar o hash com sucesso', async () => {
+    const { systemUnderTest } = makeSystemUnderTest()
+    jest.spyOn(bcrypt, 'hash').mockImplementationOnce(async () => {
+      return 'hash_value'
+    })
+
+    const hash = await systemUnderTest.encrypt('any_value')
+
+    expect(hash).toBe('hash_value')
+  })
 })
