@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "ts-node-dev --ignore-watch node_modules src/main/server.ts",
     "test": "jest --silent --noStackTrace --runInBand",
     "test:verbose": "jest --watch --noStackTrace --runInBand",
     "test:watch": "yarn test --watch",
@@ -42,6 +43,7 @@
     "prettier": "^2.2.1",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.1",
     "typescript": "^4.1.3"
   },
   "dependencies": {
