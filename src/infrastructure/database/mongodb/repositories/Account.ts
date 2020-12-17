@@ -5,15 +5,17 @@ import { Collection } from 'mongodb'
 import { mongoConnectionHelper } from '../helpers/connection'
 
 export class AccountMongoDBRepository implements CreateAccountRepository {
-  private accountCollections: Collection
+  private accountCollections: Collection<CreateAccountTDO>
 
   constructor() {
-    this.accountCollections = mongoConnectionHelper.getCollection('accounts')
+    this.accountCollections = mongoConnectionHelper.getCollection<CreateAccountTDO>(
+      'accounts'
+    )
   }
 
   async create(accountData: CreateAccountTDO): Promise<AccountEntity> {
     const account = await this.accountCollections.insertOne(accountData)
     const { _id, ...fields } = account.ops[0]
-    return { id: _id, ...fields }
+    return { id: _id.toHexString(), ...fields }
   }
 }

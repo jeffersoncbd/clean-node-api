@@ -16,12 +16,12 @@ class MongoConnectionHelper {
     }
   }
 
-  getCollection(name: string): Collection {
+  getCollection<T>(name: string): Collection<T> {
     if (!this.client) {
       throw new Error('Cliente mongoDB não foi conectado')
     }
 
-    return this.client.db().collection(name)
+    return this.client.db().collection<T>(name)
   }
 }
 
