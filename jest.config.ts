@@ -18,5 +18,8 @@ export default {
 
   testMatch: ['<rootDir>/src/**/*.test.ts', '<rootDir>/src/**/*.spec.ts'],
 
-  preset: 'ts-jest'
+  preset: '@shelf/jest-mongodb',
+  transform: {
+    '.+\\.ts$': 'ts-jest'
+  }
 }
