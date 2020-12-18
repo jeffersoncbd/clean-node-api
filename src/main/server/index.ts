@@ -1,10 +1,20 @@
-import express from 'express'
+import express, { Express } from 'express'
 import { setMiddlewares } from './middlewares'
 import { setRoutes } from './routes'
+import { env } from '../env'
 
-const expressServer = express()
+export class ExpressServer {
+  expressServer: Express
 
-setMiddlewares(expressServer)
-setRoutes(expressServer)
+  constructor() {
+    this.expressServer = express()
+    setMiddlewares(this.expressServer)
+    setRoutes(this.expressServer)
+  }
 
-export { expressServer }
+  listen(): void {
+    this.expressServer.listen(env.serverPort, () =>
+      console.log(`Servidor iniciado na porta ${env.serverPort}`)
+    )
+  }
+}
