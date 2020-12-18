@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --ignore-watch node_modules src/main/server.ts",
+    "dev": "ts-node-dev --ignore-watch node_modules src/main/application.ts",
     "test": "jest --silent --noStackTrace --runInBand",
     "test:verbose": "jest --watch --noStackTrace --runInBand",
     "test:watch": "yarn test --watch",
