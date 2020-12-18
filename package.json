@@ -10,7 +10,7 @@
     "test:watch": "yarn test --watch",
     "test:unitary": "yarn test:watch -c jest.unitary.config.ts",
     "test:integration": "yarn test:watch -c jest.integration.config.ts",
-    "test:staged": "yarn test --passWithNoTests --findRelatedTests",
+    "test:staged": "yarn test --passWithNoTests --findRelatedTests --detectOpenHandles",
     "test:ci": "yarn test --coverage"
   },
   "keywords": [],
