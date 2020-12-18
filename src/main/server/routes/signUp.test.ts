@@ -1,17 +1,13 @@
 import request from 'supertest'
-import { Express } from 'express'
-import { ExpressServer } from '..'
+import { expressServer } from '..'
 import { mongoConnectionHelper } from '../../../infrastructure/database/mongodb/helpers/connection'
 
 describe('signUpRoute', () => {
-  let expressServer: Express
-
   beforeAll(async () => {
     if (!process.env.MONGO_URL) {
       throw new Error('MONGO_URL não está disponível')
     }
     await mongoConnectionHelper.connect(process.env.MONGO_URL)
-    expressServer = new ExpressServer().expressServer
   })
   afterAll(async () => {
     await mongoConnectionHelper.disconnect()
