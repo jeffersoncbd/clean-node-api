@@ -1,6 +1,6 @@
 import {
   CreateAccount,
-  CreateAccountTDO,
+  CreateAccountDTO,
   AccountEntity,
   Encrypter,
   CreateAccountRepository
@@ -12,7 +12,7 @@ export class DatabaseCreateAccountUseCase implements CreateAccount {
     private createAccountRepository: CreateAccountRepository
   ) {}
 
-  async create(accountData: CreateAccountTDO): Promise<AccountEntity> {
+  async create(accountData: CreateAccountDTO): Promise<AccountEntity> {
     const hashedPassword = await this.encrypter.encrypt(accountData.password)
 
     const account = await this.createAccountRepository.create({
