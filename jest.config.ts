@@ -6,6 +6,7 @@ export default {
   collectCoverage: false,
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
+    '!<rootDir>/src/main/**',
     '!<rootDir>/src/**/*.protocols.ts',
     '!**/protocols/**',
     '!**/usecases/**',
