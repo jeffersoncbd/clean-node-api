@@ -3,8 +3,10 @@ import { EmailValidatorAdapter } from '../../utils/emailValidator/Adapter'
 import { DatabaseCreateAccountUseCase } from '../../data/usecases/Database/CreateAccount'
 import { BcryptAdapter } from '../../infrastructure/criptography/BcryptAdapter'
 import { AccountMongoDBRepository } from '../../infrastructure/database/mongodb/repositories/Account'
+import { Controller } from '../../presentation/protocols'
+import { LogControllerDecorator } from '../../infrastructure/decorators/LogController'
 
-export function makeSignUpController(): SignUpController {
+export function makeSignUpController(): Controller {
   const salt = 12
 
   const bcryptAdapter = new BcryptAdapter(salt)
@@ -21,5 +23,7 @@ export function makeSignUpController(): SignUpController {
     databaseCreateAccountUseCase
   )
 
-  return signUpController
+  const logControllerDecorator = new LogControllerDecorator(signUpController)
+
+  return logControllerDecorator
 }
