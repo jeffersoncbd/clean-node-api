@@ -10,7 +10,9 @@ function makeControllerSub() {
     async handle(): Promise<HttpResponse> {
       return {
         statusCode: 200,
-        body: {}
+        body: {
+          feedback: 'OK'
+        }
       }
     }
   }
@@ -25,7 +27,7 @@ function makeSystemUnderTest() {
 }
 
 describe('LogControllerDecorator', () => {
-  test('Deve chamar this.controller.handle', async () => {
+  test('Deve chamar controller.handle', async () => {
     const { systemUnderTest, controllerSub } = makeSystemUnderTest()
     const handleSpy = jest.spyOn(controllerSub, 'handle')
 
@@ -33,5 +35,19 @@ describe('LogControllerDecorator', () => {
     await systemUnderTest.handle(httpRequest)
 
     expect(handleSpy).toBeCalledWith(httpRequest)
+  })
+
+  test('Deve retornar o objeto retornado pelo controller.handle', async () => {
+    const { systemUnderTest } = makeSystemUnderTest()
+
+    const httpRequest: HttpRequest = { body: {} }
+    const httpResponse = await systemUnderTest.handle(httpRequest)
+
+    expect(httpResponse).toEqual({
+      statusCode: 200,
+      body: {
+        feedback: 'OK'
+      }
+    })
   })
 })
