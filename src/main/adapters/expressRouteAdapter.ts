@@ -8,6 +8,12 @@ export function expressRouteAdapter(controller: Controller): RequestHandler {
     }
     const httpResponse = await controller.handle(httpRequest)
 
+    if (httpResponse.statusCode !== 200) {
+      return response
+        .status(httpResponse.statusCode)
+        .json({ feedback: httpResponse.body.message })
+    }
+
     return response.status(httpResponse.statusCode).json(httpResponse.body)
   }
 }
