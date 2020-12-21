@@ -1,8 +1,8 @@
-import { CreateAccountRepository } from '../../../../data/protocols/repositories/CreateAccount'
-import { AccountEntity } from '../../../../domain/entities/Account'
-import { CreateAccountDTO } from '../../../../domain/usecases/createAccount'
+import { CreateAccountRepository } from '../../../../../data/protocols/repositories/CreateAccount'
+import { AccountEntity } from '../../../../../domain/entities/Account'
+import { CreateAccountDTO } from '../../../../../domain/usecases/createAccount'
 import { Collection } from 'mongodb'
-import { mongoConnectionHelper } from '../helpers/connection'
+import { mongoConnectionHelper } from '../../helpers/connection'
 
 export class AccountMongoDBRepository implements CreateAccountRepository {
   private accountCollections: Collection<CreateAccountDTO>

@@ -1,5 +1,5 @@
-import { mongoConnectionHelper } from '../helpers/connection'
-import { AccountMongoDBRepository } from './Account'
+import { mongoConnectionHelper } from '../../helpers/connection'
+import { AccountMongoDBRepository } from '.'
 
 function makeSystemUnderTest() {
   const systemUnderTest = new AccountMongoDBRepository()
